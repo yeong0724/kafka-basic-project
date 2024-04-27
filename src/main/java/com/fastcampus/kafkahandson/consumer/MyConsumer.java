@@ -12,7 +12,7 @@ import static com.fastcampus.kafkahandson.model.Topic.MY_JSON_TOPIC;
 public class MyConsumer {
 
     @KafkaListener(
-            topics = {MY_JSON_TOPIC},
+            topics = { MY_JSON_TOPIC },
             groupId = "test-consumer-group"
     )
     public void accept(ConsumerRecord<String, MyMessage> message) {
