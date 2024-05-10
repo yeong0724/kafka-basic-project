@@ -48,6 +48,8 @@ public class KafkaConfig {
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
         props.put(ConsumerConfig.ALLOW_AUTO_CREATE_TOPICS_CONFIG, "false");
 
+        // 수동 커밋
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
@@ -56,6 +58,10 @@ public class KafkaConfig {
     public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory (ConsumerFactory<String, Object> consumerFactory) {
         ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
+
+        // 수동 커밋
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
+
         factory.setConcurrency(1);
         return factory;
     }
